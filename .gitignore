@@ -119,3 +119,4 @@ compilation-stats.json
 # report dumping the whole system env
 /report.*.json
 dist/
+/.goreleaser.yml
