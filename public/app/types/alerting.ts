@@ -1,4 +1,5 @@
-import { SelectableValue } from '@grafana/data';
+import { DataFrame, DataQuery, PanelData, SelectableValue, TimeRange } from '@grafana/data';
+import { ExpressionQuery } from '../features/expressions/types';
 
 export interface AlertRuleDTO {
   id: number;
@@ -40,12 +41,14 @@ export type NotifierType =
   | 'hipchat'
   | 'email'
   | 'sensu'
+  | 'sensugo'
   | 'googlechat'
   | 'threema'
   | 'teams'
   | 'slack'
   | 'pagerduty'
   | 'prometheus-alertmanager'
+  | 'wechatwork'
   | 'telegram'
   | 'opsgenie'
   | 'dingding'
@@ -131,4 +134,61 @@ export interface AlertNotification {
   name: string;
   id: number;
   type: string;
+}
+
+export interface AlertDefinitionState {
+  uiState: AlertDefinitionUiState;
+  alertDefinition: AlertDefinition;
+  data: PanelData[];
+  alertDefinitions: AlertDefinition[];
+  getInstances: () => DataFrame[];
+}
+
+export interface AlertDefinition {
+  id: number;
+  uid: string;
+  title: string;
+  description: string;
+  condition: string;
+  data: any[];
+  intervalSeconds: number;
+}
+
+export interface AlertDefinitionDTO extends AlertDefinition {
+  queryType: string;
+  refId: string;
+  relativeTimeRange: TimeRange;
+  orgId: number;
+  updated: string;
+  version: number;
+}
+
+export interface AlertDefinitionQueryModel {
+  model: DataQuery | ExpressionQuery;
+}
+
+export interface AlertDefinitionUiState {
+  rightPaneSize: number;
+  topPaneSize: number;
+}
+
+export interface AnnotationItemDTO {
+  id: number;
+  alertId: number;
+  alertName: string;
+  dashboardId: number;
+  panelId: number;
+  userId: number;
+  newState: string;
+  prevState: string;
+  created: number;
+  updated: number;
+  time: number;
+  timeEnd: number;
+  text: string;
+  tags: string[];
+  login: string;
+  email: string;
+  avatarUrl: string;
+  data: any;
 }
