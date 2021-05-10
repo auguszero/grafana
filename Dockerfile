@@ -1,4 +1,4 @@
-FROM node:12.18.3-alpine3.12 as js-builder
+FROM node:12.18.3-alpine3.11 as js-builder
 
 WORKDIR /usr/src/app/
 
@@ -29,7 +29,7 @@ RUN go mod verify
 COPY pkg pkg
 COPY build.go package.json ./
 
-RUN go run build.go build
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64  go run build.go build
 
 # Final stage
 FROM alpine:3.12
