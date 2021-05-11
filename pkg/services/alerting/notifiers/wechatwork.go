@@ -3,7 +3,6 @@ package notifiers
 import (
 	"encoding/json"
 	"fmt"
-
 	"github.com/grafana/grafana/pkg/bus"
 	"github.com/grafana/grafana/pkg/infra/log"
 	"github.com/grafana/grafana/pkg/models"
@@ -82,6 +81,8 @@ func (ww *WeChatWorkNotifier) Notify(evalContext *alerting.EvalContext) error {
 		Url:  ww.URL,
 		Body: string(body),
 	}
+
+	ww.log.Info("messag=>" + string(body))
 
 	if err := bus.DispatchCtx(evalContext.Ctx, cmd); err != nil {
 		ww.log.Error("Failed to send WeChat Work", "error", err, "wechatwork", ww.Name)
